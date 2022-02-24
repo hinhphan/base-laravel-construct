@@ -1,0 +1,57 @@
+version: '3.9'
+services:
+  # PHP FPM service
+  app:
+    build: .
+    volumes:
+      - ../:/var/www/html
+    depends_on:
+      - db
+      - redis
+      # - laravel_echo_server
+
+  # Nginx service
+  webserver:
+    image: nginx:1.21.5-alpine
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ../:/var/www/html
+      - ./nginx.conf.default:/etc/nginx/conf.d/default.conf
+
+  # Mysql service
+  db:
+    image: mysql:8.0.27
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./data/db:/var/lib/mysql/
+
+  # UI Database management service
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - ${ADMINER_PORT}:8080
+    depends_on:
+      - db
+
+  # Laravel echo server
+  laravel_echo_server:
+    build:
+      context: ./laravel-echo-server
+      dockerfile: Dockerfile
+    volumes:
+      - ../../.env:/app/.env
+    restart: unless-stopped
+
+  # Redis service
+  redis:
+    image: redis:6.2-alpine3.15
+    volumes:
+      - ./data/redis:/data
+    restart: unless-stopped
