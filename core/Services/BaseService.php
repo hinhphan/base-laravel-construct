@@ -2,13 +2,14 @@
 
 namespace Core\Services;
 
+use Core\Repositories\Interfaces\BaseRepositoryContract;
 use Core\Services\Interfaces\BaseServiceContract;
 
 class BaseService implements BaseServiceContract
 {
     protected $repository;
 
-    public function __construct(BaseServiceContract $repository)
+    public function __construct(BaseRepositoryContract $repository)
     {
         return $this->repository = $repository;
     }

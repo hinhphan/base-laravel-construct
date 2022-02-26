@@ -21,8 +21,8 @@ RUN apk add --update npm \
 # Remove Cache
 RUN rm -rf /var/cache/apk/*
 
-# COPY ./docker-laravel/supervisord.conf /etc/supervisord.conf
-# COPY ./docker-laravel/supervisor.d /etc/supervisor.d
+# COPY ./.docker/supervisord.conf /etc/supervisord.conf
+# COPY ./.docker/supervisor.d /etc/supervisor.d
 
 
 # Add UID '1000' to www-data
@@ -42,6 +42,6 @@ ENV ENABLE_HORIZON 0
 # horizon da bao gom worker
 ENV ENABLE_WORKER 0
 
-# ENTRYPOINT ["sh", "/var/www/html/docker-laravel/docker-entrypoint.sh"]
+# ENTRYPOINT ["sh", "/var/www/html/.docker/docker-entrypoint.sh"]
 
 # CMD supervisord -n -c /etc/supervisord.conf
