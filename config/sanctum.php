@@ -44,7 +44,13 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => 2,
+
+    /*
+    | Expiration Minutes Of Refresh Token
+    */
+    
+    'expiretion_refresh_token' => 5,
 
     /*
     |--------------------------------------------------------------------------

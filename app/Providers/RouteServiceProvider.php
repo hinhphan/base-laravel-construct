@@ -20,6 +20,13 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * The controller api namespace for the application.
+     *
+     * @var string|null
+     */
+    protected $apiNamespace = 'App\\Http\\Controllers\\Api\\V1';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -31,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () {
             Route::prefix('api')
                 ->middleware('api')
-                ->namespace($this->namespace)
+                ->namespace($this->apiNamespace)
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
